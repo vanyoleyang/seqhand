@@ -14,4 +14,4 @@ your project directory in order to generate hand motions.
 Put your mano folder from MANO lib in /your/project/directory/mano/
 
 ## Hand Skin Color
-Hand skin colors are obtained from our [baseline work](https://github.com/boukhayma/3dhand)
+Hand skin colors (meshes_colored/) are obtained from our [baseline work](https://github.com/boukhayma/3dhand)
