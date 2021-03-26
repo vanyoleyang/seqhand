@@ -19,7 +19,7 @@ You need to get this [normalized BigHand data file](https://drive.google.com/fil
 your project directory in order to generate hand motions.
 
 ## MANO
-Install and set up your [manopth (MANO library)](https://github.com/hassony2/manopth) as explained in their work page.
+Install and set up [manopth (MANO library)](https://github.com/hassony2/manopth) as explained in their work page.
 
 Put your "mano" folder in ```/your/project/directory/mano/```.
 
