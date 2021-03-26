@@ -2,7 +2,7 @@
 This is the implementation of synthetic hand motion generation presented in [SeqHAND (ECCV 2020)](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123570120.pdf).
 
 ## required libraries
-
+```
 pytorch==1.3.1
 cv2
 imageio
@@ -10,7 +10,8 @@ pickle
 os
 pillow
 numpy
-opendr>=0.78
+opendr>=0.7
+```
 
 ## BH-dataset
 I have normalized [BigHand](http://bjornstenger.github.io/papers/yuan_cvpr2017.pdf) dataset annotations (3D joint coordinates for each pose data).
