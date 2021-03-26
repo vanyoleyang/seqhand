@@ -20,7 +20,16 @@ your project directory in order to generate hand motions.
 
 ## MANO
 Install and set up your [manopth (MANO library)](https://github.com/hassony2/manopth) as explained in their work page.
-Put your "mano" folder in /your/project/directory/mano/
+Put your "mano" folder in ```/your/project/directory/mano/```.
 
 ## Hand Skin Color
-Hand skin colors (meshes_colored/) are obtained from our [baseline work](https://github.com/boukhayma/3dhand)
+Hand skin colors (```meshes_colored/```) are obtained from our [baseline work](https://github.com/boukhayma/3dhand)
+
+## Usage
+In order to generate RGB hand motion image samples, 
+run 
+```
+python gen_sequential_synth_data.py
+```
+
+The genrations are saved in ```results/``` folder.
