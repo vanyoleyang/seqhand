@@ -10,7 +10,7 @@ pickle
 os
 pillow
 numpy
-opendr>=0.7
+opendr>=0.76
 ```
 
 ## BH-dataset
