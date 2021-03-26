@@ -1,7 +1,7 @@
 # Official Implementation of SeqHand
 This is the implementation of synthetic hand motion generation presented in [SeqHAND (ECCV 2020)](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123570120.pdf).
 
-## required libraries
+## Required Libraries
 ```
 pytorch==1.3.1
 cv2==3.4.2
