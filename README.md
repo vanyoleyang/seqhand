@@ -20,6 +20,7 @@ your project directory in order to generate hand motions.
 
 ## MANO
 Install and set up your [manopth (MANO library)](https://github.com/hassony2/manopth) as explained in their work page.
+
 Put your "mano" folder in ```/your/project/directory/mano/```.
 
 ## Hand Skin Color
