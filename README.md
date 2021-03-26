@@ -4,11 +4,11 @@ This is the implementation of synthetic hand motion generation presented in [Seq
 ## required libraries
 ```
 pytorch==1.3.1
-cv2
-imageio
+cv2==3.4.2
+imageio==2.6.1
 pickle
 os
-pillow
+pillow==6.1.0
 numpy
 opendr>=0.76
 ```
