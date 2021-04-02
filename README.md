@@ -11,6 +11,7 @@ os
 pillow==6.1.0
 numpy
 opendr>=0.76
+tqdm
 ```
 
 ## BH-dataset
