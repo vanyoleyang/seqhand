@@ -1,13 +1,11 @@
 import torch
-import random
 import cv2
 import imageio
 import pickle
 import os
+from tqdm import tqdm
 
-from numpy import dot
 from numpy.linalg import norm
-import numpy as np
 
 from Encoder_BH2MANO import Encoder_BH2MANO
 from gen_3d_pose_flow import *
@@ -74,7 +72,7 @@ def get_ss_tu_tv(verts, joints, w, h) :
        tv = (h - hand_length) / 2. + vmin + hand_length / 2. + random.uniform(-50,45)
 
        rot_ind = random.randint(0,1)
-       if rot_ind : 
+       if rot_ind > 0.5 :
            angle = random.uniform(-np.pi, np.pi)
            axis = np.array([random.uniform(-1., 1.) for _ in range(3)])
            axis[random.randint(0, 2)] = 1.
@@ -112,7 +110,7 @@ def main() :
        num_flows = 2
        flow_length = 10
 
-       pd = np.load('normalized_bh_inMANOorder.npy') ## Need to Download it 
+       pd = np.load('normalized_bh_inMANOorder.npy') ## Need to Download it
        model_path = 'BH2MANO_model/model_BH2MANO.pth'
 
        bg_path = 'BG_data/'
@@ -136,7 +134,7 @@ def main() :
        gt['cam_params'] = []
        gt['joints_3d'] = []
        gt['verts_3d'] = []
-       for frame_idx in range(num_flows):
+       for frame_idx in tqdm(range(num_flows)):
 
               pose_flow = gen_3d_pose_flow(pd.reshape((pd.shape[0], pd.shape[1] * pd.shape[2])), flow_length=flow_length)
 
@@ -158,13 +156,13 @@ def main() :
               size = 224
               w, h = size, size
 
-              flow_step = pose_flow.shape[0]
+              # flow_length = pose_flow.shape[0]
+              assert flow_length == pose_flow.shape[0]
 
               ss, tu, tv, rot = get_ss_tu_tv(hand_verts[0], hand_joints[0], w, h)
 
               ss_end, tu_end, tv_end, rot_end = get_ss_tu_tv(hand_verts[-1], hand_joints[-1], w, h)
-              rot_var_speed = random.uniform(0, 0.6)
-              
+              rot_var_speed = random.uniform(0, 0.6) # random rotation speed
 
               ## Get Background
               while True :
@@ -179,11 +177,11 @@ def main() :
               ## Collect GTs
               images = []
               masks = []
-              joints_2d = np.zeros((flow_step, 42))
-              cam_params = np.zeros((flow_step, 27))
-              joints_3d  = np.zeros((flow_step, 21, 3))
-              verts_3d = np.zeros((flow_step, 778, 3))
-              for i in range(flow_step):
+              joints_2d = np.zeros((flow_length, 42))
+              cam_params = np.zeros((flow_length, 27))
+              joints_3d  = np.zeros((flow_length, 21, 3))
+              verts_3d = np.zeros((flow_length, 778, 3))
+              for i in range(flow_length):
 
                      img, mask, vert_3d, joint_3d, vert, joint = create_synth(hand_verts[i], hand_joints[i], color, f, ss, tu, tv, rot, w, h, bg)
                      images.append(img)
@@ -195,12 +193,12 @@ def main() :
                      joints_3d[i, :, :] = joint_3d
                      verts_3d[i, :, :] = vert_3d
 
-                     ss = ss + (ss_end - ss) / flow_step * 0.5
-                     tu = tu + (tu_end - tu) / flow_step * 0.2 
-                     tv = tv + (tv_end - tv) / flow_step * 0.2
-                     rot = rot + (rot_end - rot) / flow_step * rot_var_speed
-                     bg_cent_x = int(bg_cent_x + (bg_cent_end_x - bg_cent_x) / flow_step)
-                     bg_cent_y = int(bg_cent_y + (bg_cent_end_y - bg_cent_y) / flow_step)
+                     ss = ss + (ss_end - ss) / flow_length * 0.5
+                     tu = tu + (tu_end - tu) / flow_length * 0.2
+                     tv = tv + (tv_end - tv) / flow_length * 0.2
+                     rot = rot + (rot_end - rot) / flow_length * rot_var_speed
+                     bg_cent_x = int(bg_cent_x + (bg_cent_end_x - bg_cent_x) / flow_length)
+                     bg_cent_y = int(bg_cent_y + (bg_cent_end_y - bg_cent_y) / flow_length)
                      bg = bg_orig[bg_cent_x - int(size / 2):bg_cent_x + int(size / 2),
                           bg_cent_y - int(size / 2):bg_cent_y + int(size / 2), :]
 
